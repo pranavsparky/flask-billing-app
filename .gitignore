@@ -1,10 +1,7 @@
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
-.Python
-env/
+Bookings/
 venv/
 *.log
-Bookings/
 .DS_Store

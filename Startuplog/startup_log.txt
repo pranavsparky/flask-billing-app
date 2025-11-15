@@ -1,0 +1,97 @@
+================================== 
+Flask App Startup Attempt 
+Date/Time: 14-11-2025 16:45:46.79 
+Working Directory: C:\Users\Pranav\Desktop\bill_app 
+================================== 
+Waiting 5 seconds for system... 
+Checking Python installation... 
+Python 3.14.0
+Python found successfully 
+app.py found 
+No virtual environment found, using system Python 
+Checking for existing Flask instances... 
+Starting Flask application... 
+================================== 
+Flask App Startup Attempt 
+Date/Time: 14-11-2025 17:01:16.13 
+Working Directory: C:\Users\Pranav\Desktop\bill_app 
+================================== 
+Waiting 5 seconds for system... 
+Checking Python installation... 
+Python 3.14.0
+Python found successfully 
+app.py found 
+No virtual environment found, using system Python 
+Checking for existing Flask instances... 
+Starting Flask application... 
+================================== 
+Flask App Startup Attempt 
+Date/Time: 14-11-2025 17:04:29.14 
+Working Directory: C:\Users\Pranav\Desktop\bill_app 
+================================== 
+Waiting 5 seconds for system... 
+Checking Python installation... 
+Python 3.14.0
+Python found successfully 
+app.py found 
+No virtual environment found, using system Python 
+Checking for existing Flask instances... 
+Starting Flask application... 
+================================== 
+Flask App Startup Attempt 
+Date/Time: 14-11-2025 17:06:47.03 
+Working Directory: C:\Users\Pranav\Desktop\bill_app 
+================================== 
+Waiting 5 seconds for system... 
+Checking Python installation... 
+Python 3.14.0
+Python found successfully 
+app.py found 
+No virtual environment found, using system Python 
+Checking for existing Flask instances... 
+Starting Flask application... 
+================================== 
+Flask App Startup Attempt 
+Date/Time: 14-11-2025 17:30:14.95 
+Working Directory: C:\Users\Pranav\Desktop\bill_app 
+================================== 
+Waiting 5 seconds for system... 
+Checking Python installation... 
+Python 3.14.0
+Python found successfully 
+app.py found 
+No virtual environment found, using system Python 
+Checking for existing Flask instances... 
+Starting Flask application... 
+================================== 
+Flask App Startup Attempt 
+Date/Time: 14-11-2025 17:46:48.19 
+Working Directory: C:\Users\Pranav\Desktop\bill_app 
+================================== 
+Waiting 5 seconds for system... 
+Checking Python installation... 
+Python 3.14.0
+Python found successfully 
+app.py found 
+No virtual environment found, using system Python 
+Checking for existing Flask instances... 
+Starting Flask application... 
+================================== 
+Flask App Startup Attempt 
+Date/Time: 15-11-2025  4:52:54.21 
+Working Directory: C:\Users\Pranav\Desktop\bill_app 
+================================== 
+Waiting 5 seconds for system... 
+Checking Python installation... 
+Python 3.14.0
+Python found successfully 
+app.py found 
+No virtual environment found, using system Python 
+Checking for existing Flask instances... 
+Starting Flask application... 
+================================== 
+Flask App Startup Attempt 
+Date/Time: 15-11-2025 17:37:20.45 
+Working Directory: C:\Users\Pranav\Desktop\bill_app 
+================================== 
+Waiting 5 seconds for system... 

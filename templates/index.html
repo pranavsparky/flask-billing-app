@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Booking Quotation</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 40px 0;
+    }
+
+    .container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 700px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row > div {
+      flex: 1;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 15px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #0078d7;
+      color: white;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005ea2;
+    }
+
+    .designed-by-footer {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+      margin-top: 10px;
+      background-color: #f3f4f6;
+      padding: 5px 10px;
+      border-radius: 6px;
+    }
+
+    .designed-by-footer img {
+      width: 30px; 
+      height: 30px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div style="text-align: center; margin-bottom: 15px;">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="max-width:150px; height:auto;">
+    </div>
+
+    <h2>Booking Quotation</h2>
+
+    <form id="billForm" action="/generate" method="POST" target="downloadFrame">
+
+      <div class="row">
+        <div>
+          <label>Name:</label>
+          <input type="text" name="name" required>
+        </div>
+        <div>
+          <label>Pax:</label>
+          <input type="number" name="pax" required>
+        </div>
+      </div>
+
+      <label>Mobile Number:</label>
+      <input type="text" name="mobile" required>
+
+      <div class="row">
+        <div>
+          <label>Check-in Date and Time:</label>
+          <input type="datetime-local" name="checkin" id="checkin" required oninput="updateTotals()">
+        </div>
+        <div>
+          <label>Check-out Date and Time:</label>
+          <input type="datetime-local" name="checkout" id="checkout" required oninput="updateTotals()">
+        </div>
+      </div>
+
+      <h3 style="margin-top: 20px;">Room Details</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Room Type</th>
+            <th>No. of Rooms</th>
+            <th>Extra Bed/Room</th>
+            <th>AC or Non-AC</th>
+            <th>Rent (Per Room)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Double Occupancy</td>
+            <td><input type="number" name="double_rooms" id="double_rooms" oninput="updateTotals()"></td>
+            <td><input type="number" name="double_extra"></td>
+            <td>
+              <select name="double_ac">
+                <option value="">-- Select --</option>
+                <option value="AC">AC</option>
+                <option value="Non-AC">Non-AC</option>
+              </select>
+            </td>
+            <td><input type="number" name="double_rent" id="double_rent" oninput="updateTotals()"></td>
+          </tr>
+          <tr>
+            <td>Triple Occupancy</td>
+            <td><input type="number" name="triple_rooms" id="triple_rooms" oninput="updateTotals()"></td>
+            <td><input type="number" name="triple_extra_bed"></td>
+            <td>
+              <select name="triple_ac">
+                <option value="">-- Select --</option>
+                <option value="AC">AC</option>
+                <option value="Non-AC">Non-AC</option>
+              </select>
+            </td>
+            <td><input type="number" name="triple_rent_per_room" id="triple_rent_per_room" oninput="updateTotals()"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row" style="margin-top:15px;">
+        <div>
+          <label>Advance:</label>
+          <input type="number" name="advance" id="advance" oninput="updateTotals()">
+        </div>
+        <div>
+          <label>Discount:</label>
+          <input type="number" name="discount" id="discount" oninput="updateTotals()">
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Total Rent:</label>
+          <input type="number" name="total_rent" id="total_rent" readonly>
+        </div>
+        <div>
+          <label>Balance:</label>
+          <input type="number" name="balance" id="balance" readonly>
+        </div>
+      </div>
+
+      <label>Advance Payment Mode:</label>
+      <select name="advance_mode" id="advance_mode" disabled>
+        <option value="">-- Select --</option>
+        <option value="Cash">Cash</option>
+        <option value="UPI">UPI</option>
+      </select>
+
+      <label>Remarks:</label>
+      <textarea name="remarks" rows="3"></textarea>
+
+      <button type="submit">Generate PDF</button>
+    </form>
+
+    <iframe name="downloadFrame" style="display:none;"></iframe>
+  </div>
+
+  <div class="designed-by-footer">
+    <span>Designed by</span>
+    <img src="{{ url_for('static', filename='PK.png') }}" alt="PK Logo">
+  </div>
+
+  <script>
+    function updateTotals() {
+      const doubleRooms = parseFloat(document.getElementById('double_rooms').value) || 0;
+      const doubleRent = parseFloat(document.getElementById('double_rent').value) || 0;
+      const tripleRooms = parseFloat(document.getElementById('triple_rooms').value) || 0;
+      const tripleRent = parseFloat(document.getElementById('triple_rent_per_room').value) || 0;
+      const advance = parseFloat(document.getElementById('advance').value) || 0;
+      const discount = parseFloat(document.getElementById('discount').value) || 0;
+
+      const checkin = document.getElementById('checkin').value;
+      const checkout = document.getElementById('checkout').value;
+
+      // Calculate number of days (round up any fraction to 1 day)
+      let numDays = 1;
+      if (checkin && checkout) {
+        const checkinDate = new Date(checkin);
+        const checkoutDate = new Date(checkout);
+        const diffMs = checkoutDate - checkinDate;
+        numDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+        if (numDays < 1) numDays = 1;
+      }
+
+      const advanceModeSelect = document.getElementById('advance_mode');
+      if (advance > 0) {
+        advanceModeSelect.disabled = false;
+      } else {
+        advanceModeSelect.disabled = true;
+        advanceModeSelect.value = '';
+      }
+
+      // Total Rent = (double rooms + triple rooms) * number of days
+      const totalRent = ((doubleRooms * doubleRent) + (tripleRooms * tripleRent)) * numDays;
+      const balance = totalRent - advance - discount;
+
+      document.getElementById('total_rent').value = totalRent.toFixed(2);
+      document.getElementById('balance').value = balance.toFixed(2);
+    }
+
+    // Reset form after PDF generation
+    const form = document.getElementById('billForm');
+    form.addEventListener('submit', () => {
+      setTimeout(() => {
+        form.reset();
+        document.getElementById('total_rent').value = '';
+        document.getElementById('balance').value = '';
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

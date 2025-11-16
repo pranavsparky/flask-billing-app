@@ -101,13 +101,6 @@
       height: 30px;
       vertical-align: middle;
     }
-
-    .error {
-      color: red;
-      font-size: 12px;
-      margin-top: 3px;
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -215,7 +208,6 @@
         <option value="Cash">Cash</option>
         <option value="UPI">UPI</option>
       </select>
-      <div class="error" id="advanceModeError">Please select the Advance Payment Mode.</div>
 
       <label>Remarks:</label>
       <textarea name="remarks" rows="3"></textarea>
@@ -243,6 +235,7 @@
       const checkin = document.getElementById('checkin').value;
       const checkout = document.getElementById('checkout').value;
 
+      // Calculate number of days (round up any fraction to 1 day)
       let numDays = 1;
       if (checkin && checkout) {
         const checkinDate = new Date(checkin);
@@ -252,17 +245,17 @@
         if (numDays < 1) numDays = 1;
       }
 
-      const advanceModeSelect = document.getElementById('advance_mode');
-      if (advance > 0) {
-        advanceModeSelect.disabled = false;
-        advanceModeSelect.required = true;
-      } else {
-        advanceModeSelect.disabled = true;
-        advanceModeSelect.value = '';
-        advanceModeSelect.required = false;
-        document.getElementById('advanceModeError').style.display = 'none';
-      }
+        const advanceModeSelect = document.getElementById('advance_mode');
+        if (advance > 0) {
+          advanceModeSelect.disabled = false;
+          advanceModeSelect.required = true;
+        } else {
+          advanceModeSelect.disabled = true;
+          advanceModeSelect.value = '';
+          advanceModeSelect.required = false;
+        }
 
+      // Total Rent = (double rooms + triple rooms) * number of days
       const totalRent = ((doubleRooms * doubleRent) + (tripleRooms * tripleRent)) * numDays;
       const balance = totalRent - advance - discount;
 
@@ -270,26 +263,13 @@
       document.getElementById('balance').value = balance.toFixed(2);
     }
 
+    // Reset form after PDF generation
     const form = document.getElementById('billForm');
-    form.addEventListener('submit', function(event) {
-      const advance = parseFloat(document.getElementById('advance').value) || 0;
-      const advanceMode = document.getElementById('advance_mode').value;
-      const errorDiv = document.getElementById('advanceModeError');
-
-      if (advance > 0 && !advanceMode) {
-        event.preventDefault();
-        errorDiv.style.display = 'block';
-        document.getElementById('advance_mode').focus();
-        return false;
-      } else {
-        errorDiv.style.display = 'none';
-      }
-
+    form.addEventListener('submit', () => {
       setTimeout(() => {
         form.reset();
         document.getElementById('total_rent').value = '';
         document.getElementById('balance').value = '';
-        document.getElementById('advanceModeError').style.display = 'none';
       }, 2000);
     });
   </script>

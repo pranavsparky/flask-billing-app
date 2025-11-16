@@ -244,8 +244,8 @@ def generate_bill(data):
 
     terms_height = len(terms) * 45
     ensure_space(terms_height + 60)
-    c.setFillColor(colors.lightgrey)
-    c.rect(left_margin - 10, y - terms_height - 40, usable_width + 20, terms_height + 60, fill=True, stroke=False)
+    #c.setFillColor(colors.lightgrey)
+    #c.rect(left_margin - 10, y - terms_height - 40, usable_width + 20, terms_height + 60, fill=True, stroke=False)
 
     c.setFillColor(colors.black)
     start_section("Important Terms & Conditions:", font_size=14, gap=10)

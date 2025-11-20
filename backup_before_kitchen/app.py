@@ -49,9 +49,8 @@ def generate():
         "triple_extra_bed": request.form.get('triple_extra_bed'),
         "triple_ac": request.form.get('triple_ac'),
         "advance": request.form.get('advance'),
-        "advance_mode": request.form.get('advance_mode'),
-        "kitchen_rent": request.form.get('kitchen_rent'),  # NEW FIELD
         "discount": request.form.get('discount'),
+        "advance_mode": request.form.get('advance_mode'),
         "total_rent": request.form.get('total_rent'),
         "balance": request.form.get('balance'),
         "remarks": request.form.get('remarks')
@@ -59,7 +58,6 @@ def generate():
 
     filename = generate_bill(booking_data)
     return send_file(filename, as_attachment=True)
-
 
 # -----------------------------------
 # RUN SERVER

@@ -165,10 +165,6 @@ def generate_bill(data):
     if is_advance_paid:
         pay_table_data.append(["Advance", data.get('advance', '')])
         pay_table_data.append(["Advance Payment Mode", data.get('advance_mode', '')])
-    
-    kitchen_rent_val = str(data.get('kitchen_rent', '')).strip()
-    if kitchen_rent_val and kitchen_rent_val not in ('0', '0.0'):
-        pay_table_data.append(["Kitchen Rent", kitchen_rent_val])
 
     discount_val = str(data.get('discount', '')).strip()
     if discount_val and discount_val not in ('0', '0.0'):

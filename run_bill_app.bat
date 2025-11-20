@@ -4,10 +4,10 @@ REM Flask Bill App - Auto Startup Script
 REM ====================================
 
 REM Set working directory
-cd /d "C:\Users\Pranav\Desktop\bill_app"
+cd /d "C:\Users\Pranav\Desktop\bill_app_web"
 
 REM Set log file path
-set LOGFILE=C:\Users\Pranav\Desktop\bill_app\Startuplog\startup_log.txt
+set LOGFILE=C:\Users\Pranav\Desktop\bill_app_web\Startuplog\startup_log.txt
 
 REM Clear old log if it's too large (keep last 100KB)
 for %%A in ("%LOGFILE%") do (

@@ -110,7 +110,6 @@
     }
   </style>
 </head>
-
 <body>
   <div class="container">
 
@@ -194,25 +193,6 @@
           <input type="number" name="advance" id="advance" oninput="updateTotals()">
         </div>
         <div>
-          <label>Advance Payment Mode:</label>
-          <select name="advance_mode" id="advance_mode" disabled>
-            <option value="">-- Select --</option>
-            <option value="Cash">Cash</option>
-            <option value="UPI">UPI</option>
-          </select>
-          <div class="error" id="advanceModeError">Please select the Advance Payment Mode.</div>
-        </div>
-      </div>
-
-      <!-- Kitchen Rent + Discount in one row -->
-      <div class="row" style="margin-top:15px;">
-        <div>
-          <label>Kitchen Rent:</label>
-          <input type="number" name="kitchen_rent" id="kitchen_rent" required oninput="updateTotals()">
-          <div class="error" id="kitchenRentError">Please enter Kitchen Rent.</div>
-        </div>
-
-        <div>
           <label>Discount:</label>
           <input type="number" name="discount" id="discount" oninput="updateTotals()">
         </div>
@@ -221,13 +201,21 @@
       <div class="row">
         <div>
           <label>Total Rent:</label>
-          <input type="number" name="total_rent" id="total_rent" readonly required>
+          <input type="number" name="total_rent" id="total_rent" readonly>
         </div>
         <div>
           <label>Balance:</label>
           <input type="number" name="balance" id="balance" readonly>
         </div>
       </div>
+
+      <label>Advance Payment Mode:</label>
+      <select name="advance_mode" id="advance_mode" disabled>
+        <option value="">-- Select --</option>
+        <option value="Cash">Cash</option>
+        <option value="UPI">UPI</option>
+      </select>
+      <div class="error" id="advanceModeError">Please select the Advance Payment Mode.</div>
 
       <label>Remarks:</label>
       <textarea name="remarks" rows="3"></textarea>
@@ -252,9 +240,6 @@
       const advance = parseFloat(document.getElementById('advance').value) || 0;
       const discount = parseFloat(document.getElementById('discount').value) || 0;
 
-      // NEW FIELD
-      const kitchenRent = parseFloat(document.getElementById('kitchen_rent').value) || 0;
-
       const checkin = document.getElementById('checkin').value;
       const checkout = document.getElementById('checkout').value;
 
@@ -278,10 +263,7 @@
         document.getElementById('advanceModeError').style.display = 'none';
       }
 
-      const totalRent =
-        (((doubleRooms * doubleRent) + (tripleRooms * tripleRent)) * numDays) +
-        kitchenRent;
-
+      const totalRent = ((doubleRooms * doubleRent) + (tripleRooms * tripleRent)) * numDays;
       const balance = totalRent - advance - discount;
 
       document.getElementById('total_rent').value = totalRent.toFixed(2);
@@ -290,43 +272,26 @@
 
     const form = document.getElementById('billForm');
     form.addEventListener('submit', function(event) {
-
-      // *** Kitchen Rent Mandatory Check ***
-      const kitchenRent = document.getElementById('kitchen_rent').value;
-      const kitchenRentError = document.getElementById('kitchenRentError');
-
-      if (!kitchenRent) {
-        event.preventDefault();
-        kitchenRentError.style.display = 'block';
-        document.getElementById('kitchen_rent').focus();
-        return false;
-      } else {
-        kitchenRentError.style.display = 'none';
-      }
-
-      // Advance Mode Check
       const advance = parseFloat(document.getElementById('advance').value) || 0;
       const advanceMode = document.getElementById('advance_mode').value;
-      const advanceError = document.getElementById('advanceModeError');
+      const errorDiv = document.getElementById('advanceModeError');
 
       if (advance > 0 && !advanceMode) {
         event.preventDefault();
-        advanceError.style.display = 'block';
+        errorDiv.style.display = 'block';
         document.getElementById('advance_mode').focus();
         return false;
       } else {
-        advanceError.style.display = 'none';
+        errorDiv.style.display = 'none';
       }
 
       setTimeout(() => {
         form.reset();
         document.getElementById('total_rent').value = '';
         document.getElementById('balance').value = '';
-        kitchenRentError.style.display = 'none';
-        advanceError.style.display = 'none';
+        document.getElementById('advanceModeError').style.display = 'none';
       }, 2000);
     });
   </script>
-
 </body>
 </html>

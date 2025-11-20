@@ -95,3 +95,19 @@ Date/Time: 15-11-2025 17:37:20.45
 Working Directory: C:\Users\Pranav\Desktop\bill_app 
 ================================== 
 Waiting 5 seconds for system... 
+================================== 
+Flask App Startup Attempt 
+Date/Time: 20-11-2025 17:26:51.61 
+Working Directory: C:\Users\Pranav\Desktop\bill_app_web 
+================================== 
+Waiting 5 seconds for system... 
+Checking Python installation... 
+Python 3.14.0
+Python found successfully 
+app.py found 
+No virtual environment found, using system Python 
+Checking for existing Flask instances... 
+Starting Flask application... 
+ERROR: Flask app failed to start 
+================================== 
+ 

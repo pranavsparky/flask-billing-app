@@ -239,6 +239,7 @@ def generate_bill(data):
         ("Alcohol Ban:", "The consumption or possession of alcohol is strictly prohibited within the hotel premises."),
         ("Cleanliness Policy:", "Chewing panmasala or spitting it anywhere inside the premises is forbidden. A penalty of 2,000/- rupees will be charged for each violation."),
         ("Damage Liability:", "Should any damage occur to hotel property (including furniture, fixtures, etc.) during your stay, it will be the responsibility of the individual to whom this quote is addressed. Charges will apply accordingly."),
+        ("Power Backup Policy:", "Although the property is equipped with power backup, air conditioning will not operate during power outages. Only essential electrical services such as lights and fans will remain functional."),
         ("Check-out Policy:", "Accommodation is provided for a 24-hour period. Any late check-out will be treated as a full-day stay, and corresponding charges will apply.")
     ]
 

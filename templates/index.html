@@ -204,7 +204,6 @@
         </div>
       </div>
 
-      <!-- Kitchen Rent + Discount in one row -->
       <div class="row" style="margin-top:15px;">
         <div>
           <label>Kitchen Rent:</label>
@@ -252,7 +251,6 @@
       const advance = parseFloat(document.getElementById('advance').value) || 0;
       const discount = parseFloat(document.getElementById('discount').value) || 0;
 
-      // NEW FIELD
       const kitchenRent = parseFloat(document.getElementById('kitchen_rent').value) || 0;
 
       const checkin = document.getElementById('checkin').value;
@@ -278,9 +276,10 @@
         document.getElementById('advanceModeError').style.display = 'none';
       }
 
+      // ✅ FIX: Kitchen rent multiplied by number of days
       const totalRent =
         (((doubleRooms * doubleRent) + (tripleRooms * tripleRent)) * numDays) +
-        kitchenRent;
+        (kitchenRent * numDays);
 
       const balance = totalRent - advance - discount;
 
@@ -291,7 +290,6 @@
     const form = document.getElementById('billForm');
     form.addEventListener('submit', function(event) {
 
-      // *** Kitchen Rent Mandatory Check ***
       const kitchenRent = document.getElementById('kitchen_rent').value;
       const kitchenRentError = document.getElementById('kitchenRentError');
 
@@ -304,7 +302,6 @@
         kitchenRentError.style.display = 'none';
       }
 
-      // Advance Mode Check
       const advance = parseFloat(document.getElementById('advance').value) || 0;
       const advanceMode = document.getElementById('advance_mode').value;
       const advanceError = document.getElementById('advanceModeError');

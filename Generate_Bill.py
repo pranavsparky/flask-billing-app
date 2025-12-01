@@ -4,7 +4,8 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.platypus import Table, TableStyle
 from reportlab.lib import colors
 import os
-import tempfile  # ADDED: For temporary directory
+import tempfile
+from datetime import datetime, timedelta  # for IST timestamp
 
 def generate_bill(data):
     # CHANGED: Use temporary directory that works on any server
@@ -102,7 +103,26 @@ def generate_bill(data):
     c.drawCentredString(width / 2, y, pdf_title)
     y -= h_title * 1.5
 
-    # --- Guest Details (Table Format) ---
+    # -------------------------------------------------
+    # NEW: RIGHT-ALIGNED IST TIMESTAMP UNDER TITLE
+    # -------------------------------------------------
+    now_utc = datetime.utcnow()
+    now_india = now_utc + timedelta(hours=5, minutes=30)
+    timestamp_str = now_india.strftime("%d-%m-%Y Time %H:%M")
+
+    if is_advance_paid:
+        status_line = f"Booking confirmed on: {timestamp_str}"
+    else:
+        status_line = f"Booking inquired on: {timestamp_str}"
+
+    c.setFont("Helvetica", 11)
+    c.drawRightString(width - right_margin, y, status_line)
+    y -= 20
+    # -------------------------------------------------
+
+    # -------------------------------------------------
+    # GUEST DETAILS
+    # -------------------------------------------------
     start_section("Guest Details")
     guest_table_data = [
         ["Name", data.get('name', '')],
@@ -215,20 +235,25 @@ def generate_bill(data):
         start_section("Remarks:")
         wrap_and_draw(remarks, font_size=10, indent=8)
 
-    # --- Complimentary Benefits ---
-    start_section("Complimentary Benefits")
-    wrap_and_draw("The following complimentary items will be provided one time only (per guest) for the entire stay:", font_size=h_text, indent=8)
-    benefits = ["Complimentary Water Bottle", "Complimentary Soap", "Complimentary Shampoo", "Complimentary Towel"]
-    for item in benefits:
-        wrap_and_draw(f"• {item}", font_size=10, indent=20)
-    
-    # --- Thank You (Centered) ---
+
     ensure_space(30)
+    # --- Footer Thank You Message ---
     thank_you_text = "Thank you for booking with us!"
     c.setFont("Helvetica-Bold", 12)
-    c.drawCentredString(width / 2, y - 20, thank_you_text)
-    y -= 40 
 
+    # FIX: Print at the footer, not relative to y
+    footer_y = bottom_margin + 20   # adjust +20 to move slightly up from the edge
+    c.drawCentredString(width / 2, footer_y, thank_you_text)
+
+    # Do NOT modify y, since this is an absolute footer draw
+	# ---------------------------------------------------------------
+    # NEW PAGE BEFORE IMPORTANT TERMS & CONDITIONS  (AS REQUESTED)
+    # ---------------------------------------------------------------
+    new_page()
+
+    # ---------------------------------------------------------------
+    # RESTORED ORIGINAL CONDITIONAL TERMS & CONDITIONS LOGIC
+    # ---------------------------------------------------------------
     # --- Important Terms & Conditions ---
     new_conditional_term = ("Balance Payment Responsibility:", "The above mentioned customer is solely responsible for clearing the full balance amount at the time of check-in.")
     
@@ -237,7 +262,7 @@ def generate_bill(data):
         ("Advance Payment Policy:", "A minimum of 30% of the total amount must be paid in advance. This payment is strictly non-refundable, as it reserves the rooms and blocks both online and offline bookings for the specified dates."),
         ("Loss or Damage:", "The management is not liable for any loss, theft or damage to guests personal belongings, valuables or property. Guests are advised to safeguard their items accordingly."),
         ("Alcohol Ban:", "The consumption or possession of alcohol is strictly prohibited within the hotel premises."),
-        ("Cleanliness Policy:", "Chewing panmasala or spitting it anywhere inside the premises is forbidden. A penalty of 2,000/- rupees will be charged for each violation."),
+        ("Cleanliness Policy:", "Chewing panmasala or spitting it anywhere inside the premises is forbidden. A penalty of 2,000 rupees will be charged for each violation."),
         ("Damage Liability:", "Should any damage occur to hotel property (including furniture, fixtures, etc.) during your stay, it will be the responsibility of the individual to whom this quote is addressed. Charges will apply accordingly."),
         ("Power Backup Policy:", "Although the property is equipped with power backup, air conditioning will not operate during power outages. Only essential electrical services such as lights and fans will remain functional."),
         ("Check-out Policy:", "Accommodation is provided for a 24-hour period. Any late check-out will be treated as a full-day stay, and corresponding charges will apply.")
